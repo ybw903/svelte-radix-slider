@@ -2,6 +2,10 @@
   "name": "svelte-radix-slider",
   "version": "0.1.0",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ybw903/svelte-radix-slider.git"
+  },
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && npm run prepack",
@@ -57,7 +61,10 @@
     "vite": "^7.0.4"
   },
   "keywords": [
-    "svelte"
+    "svelte",
+    "radix",
+    "slider",
+    "range"
   ],
   "pnpm": {
     "onlyBuiltDependencies": [

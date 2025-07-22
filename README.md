@@ -1,58 +1,148 @@
-# Svelte library
+# svelte-radix-slider
 
-Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
+A Svelte port of the accessible and unstyled [Radix UI Slider](https://www.radix-ui.com/primitives/docs/components/slider) component.  
+Build performant and accessible sliders with full styling control in Svelte.
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+![npm](https://img.shields.io/npm/v/svelte-radix-slider?color=%23007acc)
+![License](https://img.shields.io/github/license/ybw903/svelte-radix-slider)
+![CI](https://img.shields.io/github/actions/workflow/status/ybw903/svelte-radix-slider/ci.yml)
 
-## Creating a project
+---
 
-If you're seeing this, you've probably already done this step. Congrats!
+## ✨ Features
 
-```bash
-# create a new project in the current directory
-npx sv create
+- ✅ Fully accessible (ARIA compliant)
+- 🎯 Precise keyboard and pointer interaction
+- 🧩 Supports single & multi-thumb sliders
+- 🎨 Unstyled — bring your own styles
+- 💡 Built with Svelte and idiomatic component API
 
-# create a new project in my-app
-npx sv create my-app
-```
+---
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
-
-## Building
-
-To build your library:
+## 🚀 Installation
 
 ```bash
-npm run package
+npm install svelte-radix-slider
+# or
+pnpm add svelte-radix-slider
 ```
 
-To create a production version of your showcase app:
+## 🧱 Usage
 
-```bash
-npm run build
+```svelte
+<script>
+  import { SliderRoot, SliderTrack, SliderRange, SliderThumb } from 'svelte-radix-slider'
+
+  let value = [50]
+</script>
+
+<SliderRoot
+  {value}
+  onValueChange={(next) => {
+    value = next
+  }}
+  min={0}
+  max={100}
+  step={1}
+  class="slider-root">
+  <SliderTrack class="slider-track">
+    <SliderRange class="slider-range" />
+  </SliderTrack>
+  <SliderThumb class="slider-thumb" />
+</SliderRoot>
+
+<style>
+  .slider-root {
+    position: relative;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    touch-action: none;
+    width: 200px;
+    height: 20px;
+  }
+
+  .slider-track {
+    background-color: #000c;
+    position: relative;
+    flex-grow: 1;
+    border-radius: 9999px;
+    height: 3px;
+  }
+
+  .slider-range {
+    position: absolute;
+    background-color: white;
+    border-radius: 9999px;
+    height: 100%;
+  }
+
+  .slider-thumb {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    box-shadow: 0 2px 10px #00000080;
+    border-radius: 10px;
+  }
+  .slider-thumb:hover {
+    background-color: #f4f0fe;
+  }
+  .slider-thumb:focus {
+    outline: none;
+    box-shadow: 0 0 0 5px #0009;
+  }
+</style>
 ```
 
-You can preview the production build with `npm run preview`.
+> 💡 Style the component using any CSS solution (Tailwind, SCSS, or plain CSS).
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+📦 Components
+| Component | Description |
+| ------------- | ---------------------------------- |
+| `SliderRoot` | Root container (holds value state) |
+| `SliderTrack` | Track area representing full range |
+| `SliderRange` | Filled range (between thumbs) |
+| `SliderThumb` | Draggable control |
 
-## Publishing
+## 📚 Props
 
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
+`<SliderRoot />`
 
-To publish your library to [npm](https://www.npmjs.com):
+| Prop            | Type                         | Default        | Description                                                            |
+| --------------- | ---------------------------- | -------------- | ---------------------------------------------------------------------- |
+| `value`         | `number[]`                   | `[]`           | Bound value (current support single value)                             |
+| `min`           | `number`                     | `0`            | Minimum value                                                          |
+| `max`           | `number`                     | `100`          | Maximum value                                                          |
+| `step`          | `number`                     | `1`            | Step size                                                              |
+| `disabled`      | `boolean`                    | `false`        | Whether the slider is disabled                                         |
+| `orientation`   | `'horizontal' \| 'vertical'` | `'horizontal'` | Orientation of the slider.                                             |
+| `inverted`      | `boolean`                    | `false`        | If true, inverts the direction (e.g., right-to-left or bottom-to-top). |
+| `onValueChange` | `(value: number[]) => void`  | —              | Callback fired when value changes during interaction.                  |
+| `onValueCommit` | `(value: number[]) => void`  | —              | Callback fired when value is committed (e.g., on pointer release).     |
 
-```bash
-npm publish
-```
+## 🎁 To-do
+
+- [ ] RTL support
+- [ ] default value support
+- [ ] bound multi value support
+
+## 🤝 Contributing PRs are welcome!
+
+If you’d like to contribute:
+
+- Fork the repo
+- Clone and pnpm install
+- Run pnpm dev to start local development
+- Open a PR 🚀
+
+## 📄 License
+
+MIT License © 2025 ybw903
+
+## 🙌 Acknowledgements
+
+This project
+is heavily inspired by the excellent work on Radix UI.
+
+Svelte version built with care to bring the same accessibility guarantees to the Svelte ecosystem.

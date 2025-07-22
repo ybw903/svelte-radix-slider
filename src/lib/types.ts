@@ -1,9 +1,8 @@
-import type { AriaAttributes, HTMLAttributes } from 'svelte/elements'
+import type { AriaAttributes } from 'svelte/elements'
 
 type Direction = 'ltr' | 'rtl'
 
 export interface SliderProps {
-  name?: string
   disabled?: boolean
   orientation?: AriaAttributes['aria-orientation']
   dir?: Direction
