@@ -15,7 +15,7 @@
   export let orientation: $$Props['orientation'] = 'horizontal'
   export let disabled: $$Props['disabled'] = false
   export let minStepsBetweenThumbs: $$Props['minStepsBetweenThumbs'] = 0
-  export let value: $$Props['value'] = undefined
+  export let value: $$Props['value'] = [0]
   export let onValueChange: $$Props['onValueChange'] = () => {}
   export let onValueCommit: $$Props['onValueCommit'] = () => {}
   export let inverted: boolean = false
@@ -26,8 +26,9 @@
   const SliderOrientation = isHorizontal ? SliderHorizontal : SliderVertical
 
   const {
-    values,
-    methods: { setValues }
+    methods: { setValues },
+    options: { values },
+    updateOption
   } = setCtx({
     disabled,
     min,
@@ -40,6 +41,8 @@
   })
 
   const valuesBeforeSlideStart = $values
+
+  console.log('vbss: ', valuesBeforeSlideStart)
 
   function handleSlideStart(value: number) {
     const closestIndex = getClosestValueIndex($values, value)
@@ -75,6 +78,12 @@
       }
     })
   }
+
+  $: updateOption('values', value!)
+  $: updateOption('disabled', disabled!)
+  $: updateOption('min', min)
+  $: updateOption('max', max)
+  $: updateOption('orientation', orientation!)
 
   function getDecimalCount(value: number) {
     return (String(value).split('.')[1] || '').length

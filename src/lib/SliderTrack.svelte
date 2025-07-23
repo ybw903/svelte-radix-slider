@@ -4,12 +4,11 @@
   import { getCtx } from './ctx.js'
 
   type $$Props = HTMLAttributes<HTMLSpanElement>
-  const ctx = getCtx()
+  const {
+    options: { disabled, orientation }
+  } = getCtx()
 </script>
 
-<span
-  data-disabled={ctx.disabled ? '' : undefined}
-  data-orientation={ctx.orientation}
-  {...$$restProps}>
+<span data-disabled={$disabled ? '' : undefined} data-orientation={$orientation} {...$$restProps}>
   <slot />
 </span>

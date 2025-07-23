@@ -5,7 +5,10 @@
   import { elementSize } from './element-size.js'
   import { convertValueToPercentage, linearScale, styleToString } from './helpers.js'
 
-  const { values, min, max, orientation, disabled, thumbs } = getCtx()
+  const {
+    options: { min, max, orientation, disabled, values },
+    thumbs
+  } = getCtx()
   let { valueIndexToChange } = getCtx()
   const orientationCtx = getOrientationCtx()
 
@@ -13,7 +16,7 @@
   const index = 0
 
   $: value = $values?.[index] as number | undefined
-  $: percent = value === undefined ? 0 : convertValueToPercentage(value, min!, max!)
+  $: percent = value === undefined ? 0 : convertValueToPercentage(value, $min, $max)
   $: label = getLabel(index, $values?.length ?? 0)
 
   let size
@@ -73,10 +76,10 @@
   {style}
   role="slider"
   aria-label={$$props['aria-label'] || label}
-  aria-valuemin={min}
+  aria-valuemin={$min}
   aria-valuenow={value}
-  aria-valuemax={max}
-  aria-orientation={orientation}
+  aria-valuemax={$max}
+  aria-orientation={$orientation}
   data-orientation={orientation}
   data-disabled={disabled ? '' : undefined}
   tabIndex={disabled ? undefined : 0}
