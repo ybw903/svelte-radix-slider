@@ -42,8 +42,6 @@
 
   const valuesBeforeSlideStart = $values
 
-  console.log('vbss: ', valuesBeforeSlideStart)
-
   function handleSlideStart(value: number) {
     const closestIndex = getClosestValueIndex($values, value)
     updateValues(value, closestIndex)
