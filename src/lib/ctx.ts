@@ -1,9 +1,12 @@
 import { getContext, setContext } from 'svelte'
 import type { AriaAttributes } from 'svelte/elements'
-import { writable } from 'svelte/store'
+import { writable, type Readable } from 'svelte/store'
 import { isFunction, omit } from './helpers.js'
 
 const SLIDER_ROOT = Symbol('SLIDER_ROOT')
+
+type StoresValues<T> =
+  T extends Readable<infer U> ? U : { [K in keyof T]: T[K] extends Readable<infer U> ? U : never }
 
 interface SliderRootProps {
   disabled?: boolean | undefined
@@ -54,7 +57,10 @@ export function setCtx(props: SliderRootProps = {}) {
     disabled
   }
 
-  function updateOption<K extends keyof typeof options>(key: K, value: (typeof options)[K]) {
+  function updateOption<K extends keyof typeof options>(
+    key: K,
+    value: StoresValues<(typeof options)[K]>
+  ) {
     if (!value) return
     options[key].set(value as never)
   }
