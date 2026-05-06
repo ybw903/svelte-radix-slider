@@ -7,13 +7,14 @@
 
   const {
     options: { min, max, orientation, disabled, values },
-    thumbs
+    thumbs,
+    getNextThumbIndex
   } = getCtx()
   let { valueIndexToChange } = getCtx()
   const orientationCtx = getOrientationCtx()
 
   let thumbRef: HTMLSpanElement
-  const index = 0
+  const index = getNextThumbIndex()
 
   $: value = $values?.[index] as number | undefined
   $: percent = value === undefined ? 0 : convertValueToPercentage(value, $min, $max)
