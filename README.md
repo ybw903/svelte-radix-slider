@@ -109,23 +109,23 @@ pnpm add svelte-radix-slider
 
 `<SliderRoot />`
 
-| Prop            | Type                         | Default        | Description                                                            |
-| --------------- | ---------------------------- | -------------- | ---------------------------------------------------------------------- |
-| `value`         | `number[]`                   | `[]`           | Bound value (current support single value)                             |
-| `min`           | `number`                     | `0`            | Minimum value                                                          |
-| `max`           | `number`                     | `100`          | Maximum value                                                          |
-| `step`          | `number`                     | `1`            | Step size                                                              |
-| `disabled`      | `boolean`                    | `false`        | Whether the slider is disabled                                         |
-| `orientation`   | `'horizontal' \| 'vertical'` | `'horizontal'` | Orientation of the slider.                                             |
-| `inverted`      | `boolean`                    | `false`        | If true, inverts the direction (e.g., right-to-left or bottom-to-top). |
-| `onValueChange` | `(value: number[]) => void`  | —              | Callback fired when value changes during interaction.                  |
-| `onValueCommit` | `(value: number[]) => void`  | —              | Callback fired when value is committed (e.g., on pointer release).     |
+| Prop                     | Type                         | Default        | Description                                                            |
+| ------------------------ | ---------------------------- | -------------- | ---------------------------------------------------------------------- |
+| `value`                  | `number[]`                   | `[]`           | Bound value. Supports single and multi-thumb sliders.                  |
+| `min`                    | `number`                     | `0`            | Minimum value                                                          |
+| `max`                    | `number`                     | `100`          | Maximum value                                                          |
+| `step`                   | `number`                     | `1`            | Step size                                                              |
+| `disabled`               | `boolean`                    | `false`        | Whether the slider is disabled                                         |
+| `orientation`            | `'horizontal' \| 'vertical'` | `'horizontal'` | Orientation of the slider.                                             |
+| `inverted`               | `boolean`                    | `false`        | If true, inverts the direction (e.g., right-to-left or bottom-to-top). |
+| `onValueChange`          | `(value: number[]) => void`  | —              | Callback fired when value changes during interaction.                  |
+| `onValueCommit`          | `(value: number[]) => void`  | —              | Callback fired when value is committed (e.g., on pointer release).     |
+| `thumbCollisionBehavior` | `'none' \| 'push'`           | `'none'`       | Controls thumb collision. `'push'` makes thumbs push each other.       |
 
 ## 🎁 To-do
 
 - [ ] RTL support
 - [ ] default value support
-- [ ] bound multi value support
 
 ## 🤝 Contributing PRs are welcome!
 
