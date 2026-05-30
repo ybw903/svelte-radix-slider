@@ -19,6 +19,7 @@
   export let onValueChange: $$Props['onValueChange'] = () => {}
   export let onValueCommit: $$Props['onValueCommit'] = () => {}
   export let inverted: boolean = false
+  export let thumbCollisionBehavior: $$Props['thumbCollisionBehavior'] = 'none'
 
   const thumbRefs = new Set<HTMLSpanElement>()
   let valueIndexToChange = 0
@@ -65,16 +66,46 @@
 
     setValues((prevValues) => {
       const nextValues = getNextSortedValues(prevValues, nextValue, atIndex)
+
+      if (thumbCollisionBehavior === 'push') {
+        const pushedValues = pushValues(prevValues, nextValue, atIndex)
+        valueIndexToChange = atIndex
+        const hasChanged = String(pushedValues) !== String(prevValues)
+        if (hasChanged && commit) onValueCommit?.(pushedValues)
+
+        return hasChanged ? pushedValues : prevValues
+      }
+
       if (hasMinStepsBetweenValues(nextValues, minStepsBetweenThumbs! * step!)) {
         valueIndexToChange = nextValues.indexOf(nextValue)
         const hasChanged = String(nextValues) !== String(prevValues)
         if (hasChanged && commit) onValueCommit?.(nextValues)
 
         return hasChanged ? nextValues : prevValues
-      } else {
-        return prevValues
       }
+
+      return prevValues
     })
+  }
+
+  function pushValues(values: number[], nextValue: number, atIndex: number): number[] {
+    const result = [...values]
+    result[atIndex] = nextValue
+    const gap = minStepsBetweenThumbs! * step!
+
+    for (let i = atIndex; i < result.length - 1; i++) {
+      if (result[i] + gap > result[i + 1]) {
+        result[i + 1] = clamp(result[i] + gap, [min!, max!])
+      } else break
+    }
+
+    for (let i = atIndex; i > 0; i--) {
+      if (result[i] - gap < result[i - 1]) {
+        result[i - 1] = clamp(result[i] - gap, [min!, max!])
+      } else break
+    }
+
+    return result
   }
 
   $: updateOption('values', value!)

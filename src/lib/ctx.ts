@@ -26,11 +26,17 @@ const omittedOptions = ['value', 'onValueChange', 'min', 'max', 'orientation', '
 export function setCtx(props: SliderRootProps = {}) {
   const sliderImplRef = writable<HTMLSpanElement | undefined>(undefined)
 
+  let thumbCounter = 0
+
   const values = writable(props.value ?? [])
   const min = writable(props.min)
   const max = writable(props.max)
   const orientation = writable(props.orientation)
   const disabled = writable(props.disabled)
+
+  function getNextThumbIndex() {
+    return thumbCounter++
+  }
 
   function setValues(nextValue: (...args: any[]) => any | number[]) {
     if (isFunction(nextValue)) {
@@ -69,7 +75,8 @@ export function setCtx(props: SliderRootProps = {}) {
     ...omit({ ...props }, ...omittedOptions),
     refs: { sliderImplRef },
     options,
-    updateOption
+    updateOption,
+    getNextThumbIndex
   })
 
   return {
@@ -81,7 +88,8 @@ export function setCtx(props: SliderRootProps = {}) {
       sliderImplRef
     },
     options,
-    updateOption
+    updateOption,
+    getNextThumbIndex
   }
 }
 

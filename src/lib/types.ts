@@ -14,6 +14,7 @@ export interface SliderProps {
   onValueChange?(value: number[]): void
   onValueCommit?(value: number[]): void
   inverted?: boolean
+  thumbCollisionBehavior?: 'none' | 'push'
 }
 
 export type SliderOrientationProps = {
